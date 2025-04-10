@@ -1,0 +1,21 @@
+---
+import fs from 'fs';
+import NoteCard from '../components/NoteCard.astro';
+
+const files = fs.readdirSync('./src/content/physics');
+const notes = await Promise.all(
+  files.map(async (file) => {
+    const mod = await import(`../content/physics/${file}`);
+    return { ...mod.frontmatter, topic: 'physics' };
+  })
+);
+---
+
+<NoteLayout title="Physics Notes">
+  <h2 class="text-2xl mb-4">Physics Notes</h2>
+  <div class="grid gap-4">
+    {notes.map(note => (
+      <NoteCard {...note} />
+    ))}
+  </div>
+</NoteLayout>
