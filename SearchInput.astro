@@ -1,0 +1,15 @@
+---
+const { query } = Astro.props;
+---
+
+<div class="mb-4">
+  <label for="search" class="block text-sm font-medium">Search Notes:</label>
+  <input
+    id="search"
+    type="text"
+    value={query || ''}
+    placeholder="Search for topics or code"
+    class="w-full p-2 mt-1 border rounded"
+    oninput="this.form.submit()"
+  />
+</div>
