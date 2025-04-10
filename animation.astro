@@ -1,0 +1,21 @@
+---
+import fs from 'fs';
+import NoteCard from '../components/NoteCard.astro';
+
+const files = fs.readdirSync('./src/content/animation');
+const notes = await Promise.all(
+  files.map(async (file) => {
+    const mod = await import(`../content/animation/${file}`);
+    return { ...mod.frontmatter, topic: 'animation' };
+  })
+);
+---
+
+<NoteLayout title="Animation Notes">
+  <h2 class="text-2xl mb-4">Animation Notes</h2>
+  <div class="grid gap-4">
+    {notes.map(note => (
+      <NoteCard {...note} />
+    ))}
+  </div>
+</NoteLayout>
